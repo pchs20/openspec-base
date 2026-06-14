@@ -33,13 +33,19 @@ When ready to implement, run /opsx:apply
 
    **IMPORTANT**: Do NOT proceed without understanding what the user wants to build.
 
-2. **Create the change directory**
+2. **Run grill-with-docs preflight**
+
+   Apply the **grill-with-docs** skill to the user's idea. This will update `CONTEXT.md` (glossary) and `docs/adr/` (ADRs) inline as decisions crystallise.
+
+   Before creating artifacts, read `CONTEXT.md` if it exists and use its terminology consistently throughout all artifacts. If key domain terms were resolved, also summarize them into the `context:` field of `openspec/config.yaml` so the OpenSpec CLI feeds them natively into artifact generation.
+
+3. **Create the change directory**
    ```bash
    openspec new change "<name>"
    ```
    This creates a scaffolded change in the planning home resolved by the CLI with `.openspec.yaml`.
 
-3. **Get the artifact build order**
+4. **Get the artifact build order**
    ```bash
    openspec status --change "<name>" --json
    ```
@@ -48,7 +54,7 @@ When ready to implement, run /opsx:apply
    - `artifacts`: list of all artifacts with their status and dependencies
    - `planningHome`, `changeRoot`, `artifactPaths`, and `actionContext`: path and scope context. Use these instead of assuming repo-local paths.
 
-4. **Create artifacts in sequence until apply-ready**
+5. **Create artifacts in sequence until apply-ready**
 
    Use the **TodoWrite tool** to track progress through the artifacts.
 
@@ -80,7 +86,7 @@ When ready to implement, run /opsx:apply
       - Use **AskUserQuestion tool** to clarify
       - Then continue with creation
 
-5. **Show final status**
+6. **Show final status**
    ```bash
    openspec status --change "<name>"
    ```
