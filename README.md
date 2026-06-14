@@ -64,7 +64,8 @@ In spec-driven workflows, artifacts usually progress like:
 1. `proposal.md`
 2. `specs/<capability>/spec.md` (one per capability)
 3. `design.md`
-4. `tasks.md`
+4. `docs/adr/*.md` (when the design introduces durable architectural decisions)
+5. `tasks.md`
 
 ### 3) Implement from tasks
 

@@ -29,9 +29,9 @@ Implement tasks from an OpenSpec change.
    openspec status --change "<name>" --json
    ```
    Parse the JSON to understand:
-   - `schemaName`: The workflow being used (e.g., "spec-driven")
+   - `schemaName`: The workflow being used (e.g., "spec-driven-with-adr")
    - `planningHome`, `changeRoot`, and `actionContext`: planning scope and edit constraints
-   - Which artifact contains the tasks (typically "tasks" for spec-driven, check status for others)
+   - Which artifact contains the tasks (typically `tasks`, but use status/apply output as the source of truth)
 
 3. **Get apply instructions**
 
@@ -56,7 +56,7 @@ Implement tasks from an OpenSpec change.
 
    Read every file path listed under `contextFiles` from the apply instructions output.
    The files depend on the schema being used:
-   - **spec-driven**: proposal, specs, design, tasks
+   - **spec-driven-with-adr**: proposal, specs, design, tasks, and any ADR files that exist for the change
    - Other schemas: follow the contextFiles from CLI output
 
 5. **Show current progress**

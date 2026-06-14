@@ -21,7 +21,7 @@ Continue working on a change by creating the next artifact.
 
    Present the top 3-4 most recently modified changes as options, showing:
    - Change name
-   - Schema (from `schema` field if present, otherwise "spec-driven")
+  - Schema (from `schema` field if present, otherwise the repo default schema)
    - Status (e.g., "0/5 tasks", "complete", "no tasks")
    - How recently it was modified (from `lastModified` field)
 
@@ -34,7 +34,7 @@ Continue working on a change by creating the next artifact.
    openspec status --change "<name>" --json
    ```
    Parse the JSON to understand current state. The response includes:
-   - `schemaName`: The workflow schema being used (e.g., "spec-driven")
+  - `schemaName`: The workflow schema being used (e.g., "spec-driven-with-adr")
    - `artifacts`: Array of artifacts with their status ("done", "ready", "blocked")
    - `isComplete`: Boolean indicating if all artifacts are complete
    - `planningHome`, `changeRoot`, `artifactPaths`, and `actionContext`: path and scope context. Use these instead of assuming repo-local paths.
@@ -98,11 +98,12 @@ The artifact types and their purpose depend on the schema. Use the `instruction`
 
 Common artifact patterns:
 
-**spec-driven schema** (proposal → specs → design → tasks):
+**spec-driven-with-adr schema** (proposal → specs → design → optional docs/adr/*.md → tasks):
 - **proposal.md**: Ask user about the change if not clear. Fill in Why, What Changes, Capabilities, Impact.
   - The Capabilities section is critical - each capability listed will need a spec file.
 - **specs/<capability>/spec.md**: Create one spec per capability listed in the proposal's Capabilities section (use the capability name, not the change name).
 - **design.md**: Document technical decisions, architecture, and implementation approach.
+- **docs/adr/*.md**: Create ADRs only when the design introduces or supersedes durable architectural decisions.
 - **tasks.md**: Break down implementation into checkboxed tasks.
 
 For other schemas, follow the `instruction` field from the CLI output.

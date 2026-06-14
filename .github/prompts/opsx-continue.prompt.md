@@ -4,7 +4,7 @@ description: Continue working on a change - create the next artifact (Experiment
 
 Continue working on a change by creating the next artifact.
 
-**Input**: Optionally specify a change name after `/opsx:continue` (e.g., `/opsx:continue add-auth`). If omitted, check if it can be inferred from conversation context. If vague or ambiguous you MUST prompt for available changes.
+**Input**: Optionally specify a change name after `/opsx-continue` (e.g., `/opsx-continue add-auth`). If omitted, check if it can be inferred from conversation context. If vague or ambiguous you MUST prompt for available changes.
 
 **Steps**
 
@@ -14,7 +14,7 @@ Continue working on a change by creating the next artifact.
 
    Present the top 3-4 most recently modified changes as options, showing:
    - Change name
-   - Schema (from `schema` field if present, otherwise "spec-driven")
+  - Schema (from `schema` field if present, otherwise the repo default schema)
    - Status (e.g., "0/5 tasks", "complete", "no tasks")
    - How recently it was modified (from `lastModified` field)
 
@@ -27,7 +27,7 @@ Continue working on a change by creating the next artifact.
    openspec status --change "<name>" --json
    ```
    Parse the JSON to understand current state. The response includes:
-   - `schemaName`: The workflow schema being used (e.g., "spec-driven")
+  - `schemaName`: The workflow schema being used (e.g., "spec-driven-with-adr")
    - `artifacts`: Array of artifacts with their status ("done", "ready", "blocked")
    - `isComplete`: Boolean indicating if all artifacts are complete
    - `planningHome`, `changeRoot`, `artifactPaths`, and `actionContext`: path and scope context. Use these instead of assuming repo-local paths.
@@ -39,7 +39,7 @@ Continue working on a change by creating the next artifact.
    **If all artifacts are complete (`isComplete: true`)**:
    - Congratulate the user
    - Show final status including the schema used
-   - Suggest: "All artifacts created! You can now implement this change with `/opsx:apply` or archive it with `/opsx:archive`."
+  - Suggest: "All artifacts created! You can now implement this change with `/opsx-apply` or archive it with `/opsx-archive`."
    - STOP
 
    ---
@@ -83,7 +83,7 @@ After each invocation, show:
 - Schema workflow being used
 - Current progress (N/M complete)
 - What artifacts are now unlocked
-- Prompt: "Run `/opsx:continue` to create the next artifact"
+- Prompt: "Run `/opsx-continue` to create the next artifact"
 
 **Artifact Creation Guidelines**
 
@@ -91,11 +91,12 @@ The artifact types and their purpose depend on the schema. Use the `instruction`
 
 Common artifact patterns:
 
-**spec-driven schema** (proposal → specs → design → tasks):
+**spec-driven-with-adr schema** (proposal → specs → design → optional docs/adr/*.md → tasks):
 - **proposal.md**: Ask user about the change if not clear. Fill in Why, What Changes, Capabilities, Impact.
   - The Capabilities section is critical - each capability listed will need a spec file.
 - **specs/<capability>/spec.md**: Create one spec per capability listed in the proposal's Capabilities section (use the capability name, not the change name).
 - **design.md**: Document technical decisions, architecture, and implementation approach.
+- **docs/adr/*.md**: Create ADRs only when the design introduces or supersedes durable architectural decisions.
 - **tasks.md**: Break down implementation into checkboxed tasks.
 
 For other schemas, follow the `instruction` field from the CLI output.
