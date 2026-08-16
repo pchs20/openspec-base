@@ -19,6 +19,9 @@ The goal is to avoid repeating setup work each time I start something new. Inste
 - GitHub Copilot integration under `.github/`
 	- `prompts/` mirroring opsx commands
 	- `skills/` mirroring openspec skills
+- Claude Code integration under `.claude/`
+	- `commands/` mirroring opsx commands
+	- `skills/` mirroring openspec skills
 - A project-level `AGENTS.md` describing structure and intent.
 
 ## Reconstructed process used to get here
