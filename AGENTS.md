@@ -16,4 +16,7 @@ docs/              # project documentation
 .github/           # GitHub config
   prompts/         # GitHub PR comments prompts (mirrors .opencode/commands/)
   skills/          # GitHub Actions skills (mirrors .opencode/skills/)
+.claude/           # Claude Code config
+  commands/        # opsx-* slash commands (mirrors .opencode/commands/)
+  skills/          # openspec-* skills (mirrors .opencode/skills/)
 ```
